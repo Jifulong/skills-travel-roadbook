@@ -1,0 +1,342 @@
+<title>川西大环线 · 6 天路书</title>
+<style>
+  :root{
+    --paper:#f6f3ec; --ground:#f6f3ec; --card:#fffdf8; --ink:#1e2530; --ink-2:#4a5563;
+    --muted:#7c8698; --rule:#ded8cb; --rule-2:#eae5d9;
+    --d1:#3d80c6; --d2:#a9682f; --d3:#bd3f2b; --d4:#357f52; --d5:#bd8a1e; --d6:#3d80c6;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,monospace;
+    --cjk:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#141b26; --card:#1b2330; --ink:#e8e4d9; --ink-2:#b3bac7;
+      --muted:#7d8899; --rule:#2a3341; --rule-2:#222b38;
+      --d1:#5a9ada; --d2:#c98a4d; --d3:#dd6047; --d4:#4fa870; --d5:#e0ad3c; --d6:#5a9ada;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#141b26; --card:#1b2330; --ink:#e8e4d9; --ink-2:#b3bac7;
+    --muted:#7d8899; --rule:#2a3341; --rule-2:#222b38;
+    --d1:#5a9ada; --d2:#c98a4d; --d3:#dd6047; --d4:#4fa870; --d5:#e0ad3c; --d6:#5a9ada;
+  }
+  :root[data-theme="light"]{
+    --ground:#f6f3ec; --card:#fffdf8; --ink:#1e2530; --ink-2:#4a5563;
+    --muted:#7c8698; --rule:#ded8cb; --rule-2:#eae5d9;
+    --d1:#3d80c6; --d2:#a9682f; --d3:#bd3f2b; --d4:#357f52; --d5:#bd8a1e; --d6:#3d80c6;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--cjk);
+       font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px}
+  .wrap-head{padding-bottom:0}   /* 抬头与吸顶导轨之间不留额外空隙 */
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  /* ---------- 抬头 ---------- */
+  header{padding:72px 0 40px;border-bottom:1px solid var(--rule)}
+  .flags{display:flex;gap:3px;margin-bottom:26px}
+  .flags i{height:5px;flex:1;border-radius:1px}
+  h1{margin:0;font-size:clamp(30px,5.2vw,46px);font-weight:600;letter-spacing:-.02em;
+     text-wrap:balance;line-height:1.25}
+  .lede{margin:14px 0 0;max-width:60ch;color:var(--ink-2);font-size:16.5px}
+  .facts{display:flex;flex-wrap:wrap;gap:0;margin-top:34px;border:1px solid var(--rule);
+         border-radius:3px;overflow:hidden}
+  .facts div{flex:1 1 130px;padding:14px 18px;border-right:1px solid var(--rule)}
+  .facts div:last-child{border-right:0}
+  .facts b{display:block;font-family:var(--mono);font-size:22px;font-weight:600;
+           font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .facts span{display:block;font-size:12px;color:var(--muted);letter-spacing:.09em;margin-top:2px}
+
+  /* ---------- 日次导轨 ---------- */
+  nav{position:sticky;top:0;z-index:5;background:var(--ground);
+      border-bottom:1px solid var(--rule);padding:11px 0;margin-bottom:8px}
+  nav .inner{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
+  nav a{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink-2);
+        border:1px solid var(--rule);border-radius:2px;padding:5px 11px;font-size:13px}
+  nav a:hover{color:var(--ink);border-color:var(--muted)}
+  nav a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  nav a i{width:9px;height:9px;border-radius:1px;flex:0 0 9px}
+  nav a em{font-family:var(--mono);font-style:normal;font-size:12px;color:var(--muted)}
+
+  /* ---------- 每日 ---------- */
+  .day{padding:52px 0;border-bottom:1px solid var(--rule-2)}
+  .dhead{display:flex;align-items:flex-start;gap:18px;margin-bottom:8px}
+  .dno{font-family:var(--mono);font-size:40px;font-weight:600;line-height:.95;
+       letter-spacing:-.04em;min-width:56px}
+  .dtitle{flex:1;min-width:0}
+  .dtitle h2{margin:0;font-size:21px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+  .dmeta{margin-top:5px;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px}
+  .dmeta span{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .dmeta span.cjk{font-family:var(--cjk)}
+
+  .grid{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:30px;
+        align-items:start;margin-top:24px}
+  @media (max-width:820px){ .grid{grid-template-columns:1fr;gap:22px} }
+
+  /* 底图当"夹页地图": 两个主题下都保持纸白, 因为高德静态图本身是亮色 */
+  figure{margin:0;background:#fffdf8;border:1px solid var(--rule);border-radius:3px;
+         padding:9px 9px 0;box-shadow:0 1px 2px rgba(20,27,38,.06)}
+  figure img{display:block;width:100%;height:auto;border-radius:2px}
+  figcaption{font-size:11.5px;color:#7c8698;padding:7px 2px 8px;letter-spacing:.04em;
+             font-family:var(--mono)}
+
+  ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  li{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid var(--rule-2)}
+  li:last-child{border-bottom:0}
+  .pin{width:23px;height:23px;flex:0 0 23px;border-radius:50%;display:grid;place-items:center;
+       font-family:var(--mono);font-size:12px;font-weight:600;color:#fffdf8;margin-top:3px}
+  .sp{flex:1;min-width:0}
+  .sp b{display:block;font-weight:600;font-size:15px;letter-spacing:-.005em}
+  .sp small{display:block;color:var(--muted);font-size:12.5px;margin-top:1px}
+  .sp small.orig{color:var(--ink-2)}
+  .shots{display:flex;gap:5px;flex:0 0 auto}
+  .shots img{width:66px;height:50px;object-fit:cover;border-radius:2px;
+             border:1px solid var(--rule);display:block}
+  .noshot{width:66px;height:50px;border:1px dashed var(--rule);border-radius:2px;
+          display:grid;place-items:center;font-size:10.5px;color:var(--muted)}
+  /* 段间里程/耗时 */
+  li.leg{border-bottom:0}
+  .leg{display:flex;align-items:center;gap:8px;padding:2px 0 2px 36px;font-size:12px;
+       color:var(--muted);font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .leg b{color:var(--ink-2);font-weight:600}
+  .leg.warn b{color:#b5723a}
+  .leg .cjk{font-family:var(--cjk)}
+  /* 海拔 + 天气 */
+  .wx{margin-top:4px;font-size:12px;color:var(--muted);font-family:var(--mono);
+      font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:8px}
+  .wx .alt{font-weight:600;color:var(--ink-2)}
+  .wx .alt.hi{color:#b5723a}      /* ≥4500m, 高反风险 */
+  .wx .cold{color:#3d80c6}        /* 最低温 ≤0 */
+  /* 特色景观标签 */
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tag{font-size:10.5px;line-height:1;padding:3px 7px;border-radius:3px;
+       border:1px solid var(--rule);color:var(--ink-2);background:transparent}
+  .tag.n{border-color:var(--d4);color:var(--d4)}   /* 名称命中, 较可靠 */
+  /* 小红书原帖链接 */
+  .xhs{margin-top:3px;display:flex;flex-direction:column;gap:1px}
+  .xhs a{font-size:12px;color:#c2334f;text-decoration:none;line-height:1.5}
+  .xhs a:hover{text-decoration:underline}
+  @media (prefers-color-scheme:dark){ .xhs a{color:#ff6b85} }
+  :root[data-theme="dark"] .xhs a{color:#ff6b85}
+  :root[data-theme="light"] .xhs a{color:#c2334f}
+
+  /* ---------- 数据说明 ---------- */
+  .notes{margin-top:56px;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+  .notes h3{margin:0;padding:14px 20px;font-size:14px;font-weight:600;
+            border-bottom:1px solid var(--rule);letter-spacing:.02em}
+  .notes ul{margin:0;padding:16px 20px 18px 38px;font-size:14px;color:var(--ink-2)}
+  .notes li{display:list-item;border:0;padding:0 0 9px;line-height:1.7}
+  .notes li:last-child{padding-bottom:0}
+  .notes code{font-family:var(--mono);font-size:13px;color:var(--ink)}
+  footer{margin-top:40px;font-size:12.5px;color:var(--muted);line-height:1.9}
+  /* ---------- 窄屏 ---------- */
+  img{max-width:100%}
+  @media (max-width:560px){
+    .wrap{padding:0 16px 56px}
+    nav .inner{padding:0 16px}
+    header{padding:44px 0 28px}
+    h1{font-size:27px}
+    .lede{font-size:15.5px}
+    /* 五宫格在窄屏会撑破 body(5×130px 起) —— 改成两列独立卡片, 顺便免掉共享边框的收口 */
+    .facts{border:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .facts div{border:1px solid var(--rule);border-radius:3px;padding:11px 13px}
+    .facts div:last-child{grid-column:1/-1}
+    .facts b{font-size:19px}
+    .dno{font-size:30px;min-width:38px}
+    .dhead{gap:12px}
+    .shots img{width:54px;height:42px}
+    .noshot{width:54px;height:42px}
+    .notes ul{padding-left:32px}
+  }
+  /* ---------- 打印 / 导出 PDF ---------- */
+  @media print{
+    /* 强制亮色: 深底印出来既费墨又难看 */
+    :root{
+      --ground:#fff; --card:#fff; --ink:#161d27; --ink-2:#3f4a58;
+      --muted:#6b7684; --rule:#c9c3b6; --rule-2:#e2ddd2;
+      --d1:#2f6fb5; --d2:#965b28; --d3:#ad3624; --d4:#2c6f46; --d5:#a8781a; --d6:#2f6fb5;
+    }
+    nav{display:none}
+    body{font-size:10pt;line-height:1.55}
+    .wrap{max-width:none;padding:0}
+    header{padding:0 0 10px}
+    h1{font-size:20pt}
+    .lede{font-size:10pt;margin-top:8px}
+    .flags{margin-bottom:12px}
+    .facts{margin-top:14px}
+    .facts div{padding:7px 12px}
+    .facts b{font-size:14pt}
+    .facts span{font-size:7.5pt;margin-top:0}
+    /* 一天一块不拆页, 但整体压到两天一页 */
+    .day{padding:12px 0;break-inside:avoid;page-break-inside:avoid;animation:none}
+    .dno{font-size:24pt;min-width:38px}
+    .dtitle h2{font-size:13pt}
+    .dmeta{margin-top:2px;font-size:8.5pt;gap:10px}
+    .grid{gap:14px;margin-top:12px;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr)}
+    figure{box-shadow:none;break-inside:avoid;padding:5px 5px 0}
+    figcaption{font-size:7.5pt;padding:4px 2px 5px}
+    li{padding:6px 0}
+    .sp b{font-size:10pt}
+    .sp small{font-size:8.5pt}
+    .pin{width:19px;height:19px;flex-basis:19px;font-size:9pt}
+    .shots img{width:46px;height:35px}
+    .noshot{width:46px;height:35px;font-size:7pt}
+    .notes{break-inside:avoid;margin-top:12px}
+    .notes ul{font-size:8.5pt;padding:9px 14px 10px 28px}
+    footer{margin-top:10px;font-size:8pt;break-before:avoid;break-inside:avoid}
+    a{color:inherit;text-decoration:none}
+  }
+  @page{size:A4;margin:14mm 12mm}
+
+  /* 必须限定 screen: 打印同样满足 no-preference, 而滚动动画起始态是 opacity:.25 ——
+     不限定的话视口外的整块内容会以半透明印出来(且此规则在 @media print 之后, 会覆盖它) */
+  @media screen and (prefers-reduced-motion:no-preference){
+    .day{animation:rise .5s ease both;animation-timeline:view();animation-range:entry 0% cover 22%}
+    @keyframes rise{from{opacity:.25;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+</style>
+
+<div class="wrap wrap-head">
+<header>
+  <div class="flags" aria-hidden="true">
+    <i style="background:var(--d1)"></i><i style="background:var(--d2)"></i>
+    <i style="background:var(--d3)"></i><i style="background:var(--d4)"></i>
+    <i style="background:var(--d5)"></i>
+  </div>
+  <h1>川西大环线 · 6 天自驾路书</h1>
+  <p class="lede">成都出发，翻折多山进甘孜，穿格聂南线到巴塘，经措普沟、姊妹湖回理塘，
+     再由塔公草原、墨石公园返程。逐日路线由高德驾车路径生成，景点实景图取自高德 POI 照片。</p>
+  <div class="facts" id="facts"></div>
+</header>
+</div>
+
+<nav><div class="inner" id="nav"></div></nav>
+
+<div class="wrap">
+  <main id="days"></main>
+
+  <section class="notes">
+    <h3>数据说明 · 请先读这两条</h3>
+    <ul id="notes"></ul>
+  </section>
+
+  <footer>
+    路线与坐标：高德地图 Web 服务（驾车路径规划 / POI 检索）· 底图：高德静态地图 © AutoNavi<br>
+    景点照片来自高德 POI 用户实拍图，版权归原作者。页面所有资源已内嵌，可离线查看。
+  </footer>
+</div>
+
+<script>
+const D = /*__DATA__*/null;
+const CV = ['--d1','--d2','--d3','--d4','--d5','--d6'];
+const cv = i => `var(${CV[i % CV.length]})`;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hm = m => `${Math.floor(m / 60)}h${String(m % 60).padStart(2, '0')}m`;
+
+/* 海拔 + 当日/次日预报。静态页面, 所以只给两天, 更长的看不出意义 */
+function wxLine(s){
+  const w = s.wx;
+  if (!w) return '';
+  const d0 = (w.daily && w.daily[0]) || null;
+  const d1 = (w.daily && w.daily[1]) || null;
+  const cell = d => d
+    ? `${esc(d.desc)} <span class="${d.tmin <= 0 ? 'cold' : ''}">${Math.round(d.tmin)}~${Math.round(d.tmax)}°C</span>`
+      + (d.pop != null ? ` ${d.pop}%` : '')
+    : '';
+  return `<div class="wx">
+    <span class="alt${w.elevation >= 4500 ? ' hi' : ''}">海拔 ${w.elevation}m</span>
+    ${d0 ? `<span>当日 ${cell(d0)}</span>` : ''}
+    ${d1 ? `<span>次日 ${cell(d1)}</span>` : ''}
+  </div>`;
+}
+
+/* 抬头数字 */
+const nSpot = D.days.reduce((a, d) => a + d.spots.length, 0);
+const nShot = D.days.reduce((a, d) => a + d.spots.filter(s => s.img.length).length, 0);
+const mins = D.days.reduce((a, d) => a + (d.route ? d.route.duration_min : 0), 0);
+document.getElementById('facts').innerHTML = [
+  [D.total_km.toLocaleString('en-US'), '总里程 KM'],
+  [D.days.length, '天'],
+  [hm(mins), '累计驾车'],
+  [nSpot, '点位'],
+  [`${nShot}/${nSpot}`, '有实景图'],
+].map(([v, k]) => `<div><b>${esc(v)}</b><span>${esc(k)}</span></div>`).join('');
+
+/* 日次导轨 */
+document.getElementById('nav').innerHTML = D.days.map((d, i) =>
+  `<a href="#d${d.day}"><i style="background:${cv(i)}"></i>D${d.day}
+     <em>${d.route ? d.route.distance_km + 'km' : '—'}</em></a>`).join('');
+
+/* 每日 */
+document.getElementById('days').innerHTML = D.days.map((d, i) => {
+  const c = cv(i), sp = d.spots;
+  const title = `${esc(sp[0] ? sp[0].matched : '')} → ${esc(sp.length > 1 ? sp[sp.length - 1].matched : '')}`;
+  const meta = [
+    d.route ? `<span>${d.route.distance_km} km</span>` : '',
+    d.route ? `<span>${hm(d.route.duration_min)}</span>` : '',
+    d.stay ? `<span class="cjk">宿 ${esc(d.stay)}</span>` : '',
+    `<span>${sp.length} 个点位</span>`,
+  ].join('');
+  const list = sp.map((s, k) => {
+    const lg = s.leg_to_next;
+    const legRow = lg ? `
+      <li class="leg${lg.ratio && lg.ratio > 2.5 ? ' warn' : ''}">
+        ↓ <b>${lg.km} km</b> · <b>${hm(lg.min)}</b>
+        ${lg.ratio && lg.ratio > 2.5
+          ? `<span class="cjk">⚠ 绕行 ${lg.ratio}x，此段高德无路网</span>` : ''}
+      </li>` : '';
+    return `
+    <li>
+      <div class="pin" style="background:${c}">${k + 1}</div>
+      <div class="sp">
+        <b>${esc(s.matched)}</b>
+        ${s.input !== s.matched ? `<small class="orig">原文「${esc(s.input)}」</small>` : ''}
+        <small>${esc(s.adname)}${s.type ? ' · ' + esc(s.type) : ''}</small>
+        ${wxLine(s)}
+        ${(s.scenery && s.scenery.length) ? `<div class="tags">${s.scenery.map(t =>
+          `<span class="tag${t.from === '名称' ? ' n' : ''}" title="依据：${esc(t.from)}">${esc(t.tag)}</span>`
+        ).join('')}</div>` : ''}
+        ${(s.xhs && s.xhs.length) ? `<div class="xhs">${s.xhs.map(x =>
+          `<a href="${esc(x.link)}" target="_blank" rel="noreferrer noopener">小红书「${
+            esc(x.title || '原帖')}」${x.author ? ' · @' + esc(x.author) : ''} ↗</a>`).join('')}</div>` : ''}
+      </div>
+      <div class="shots">${s.img.length
+        ? s.img.map(u => `<img src="${u}" alt="${esc(s.matched)} 实景" loading="lazy">`).join('')
+        : '<div class="noshot">无图</div>'}</div>
+    </li>${legRow}`;
+  }).join('');
+  return `
+    <section class="day" id="d${d.day}">
+      <div class="dhead">
+        <div class="dno" style="color:${c}">${d.day}</div>
+        <div class="dtitle"><h2>${title}</h2><div class="dmeta">${meta}</div></div>
+      </div>
+      <div class="grid">
+        ${d.map ? `<figure><img src="${d.map}" alt="第 ${d.day} 天路线图">
+             <figcaption>D${d.day} · ${d.route ? d.route.distance_km + ' km' : ''}
+             ${d.route ? ' · 绕行比 ' + d.route.detour_ratio : ''}</figcaption></figure>` : '<div></div>'}
+        <ol>${list}</ol>
+      </div>
+    </section>`;
+}).join('');
+
+/* 数据说明 */
+const extra = [
+  (D.weather_at
+    ? `<b>天气是快照，不会自动更新</b>：以上气温与降水为 <code>${esc(D.weather_at)}</code> 抓取的预报`
+      + `（Open-Meteo，按坐标而非按区县）。出行前请重新生成本页。`
+      + `海拔取自地形模型格点（约 1km 分辨率），与实际路面可能差几百米 ——`
+      + `折多山标 4774m，而垭口路面约 4300m，当量级参考。`
+    : ''),
+  '<b>D3 格聂南线的路线图不可信</b>：高德路网里没有南线那段非铺装路，' +
+  '格聂神山→扎瓦拉观景台直线 33km 却给出 110km（3.4 倍），系统绕回国道。' +
+  '该段里程、耗时、折线形状都仅供示意，实际穿越请用轨迹导航。',
+  '所有坐标由地名检索得到，<b>定位错误不会报错</b>，只会安静地给出一条绕远的路线。' +
+  '例如「格底拉姆天空之城」若限定错城市会命中 95km 外的同名 POI，D1 里程会从 378km 虚增到 644km。' +
+  '本页数据已逐点核对。',
+];
+document.getElementById('notes').innerHTML =
+  extra.map(t => `<li>${t}</li>`).join('') +
+  (D.warnings || []).map(w => `<li><code>${esc(w)}</code></li>`).join('');
+</script>

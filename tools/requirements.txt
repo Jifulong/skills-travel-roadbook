@@ -1,0 +1,2 @@
+# 仅小红书补图需要(PyExecJS 调 node 跑签名 JS)
+PyExecJS>=1.5.1
